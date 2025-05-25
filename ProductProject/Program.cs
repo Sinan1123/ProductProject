@@ -1,4 +1,4 @@
-﻿using Products;
+using Products;
 
 namespace ProductProject
 {
@@ -91,9 +91,9 @@ namespace ProductProject
 
             };
 
-            bool devam = true;
+            bool proccess = true;
 
-            while (devam)
+            while (proccess)
             {
                 Console.WriteLine("\nYapmak istediğiniz işlemi seçin:");
                 Console.WriteLine("1 - Fiyatı 100 TL ve üzeri ürünleri listele");
@@ -173,9 +173,7 @@ namespace ProductProject
                         break;
 
                     case 8:
-                        var laptops = products
-                            .Where(p => p.Name.ToLower().Contains("laptop"))
-                            .ToList();
+                        var laptops = products.Where(p => p.Name.Equals("Laptop", StringComparison.OrdinalIgnoreCase)).ToList();
                         if (laptops.Count == 0)
                             Console.WriteLine("Aradığınız ada sahip bir ürün bulunamadı!");
                         else
@@ -209,14 +207,14 @@ namespace ProductProject
 
                     case 11:
                         Console.Write("Aramak istediğiniz kelimeyi girin: ");
-                        string arananKelime = Console.ReadLine();
-                        var sonuc = AramaYap(products, arananKelime);
-                        Console.WriteLine($"\n\"{arananKelime}\" kelimesine göre arama sonucu:");
-                        if (sonuc.Any())
+                        string searchedword = Console.ReadLine();
+                        var result = Search(products, searchedword);
+                        Console.WriteLine($"\n\"{searchedword}\" kelimesine göre arama sonucu:");
+                        if (result.Any())
                         {
-                            foreach (var urun in sonuc)
+                            foreach (var item in result)
                             {
-                                Console.WriteLine($"- {urun.Name} ({urun.Category}) - Fiyat: {urun.Price} TL");
+                                Console.WriteLine($"- {item.Name} ({item.Category}) - Fiyat: {item.Price} TL");
                             }
                         }
                         else
@@ -226,7 +224,7 @@ namespace ProductProject
                         break;
 
                     case 0:
-                        devam = false;
+                        proccess = false;
                         Console.WriteLine("Programdan çıkılıyor...");
                         break;
 
@@ -239,10 +237,10 @@ namespace ProductProject
 
 
 
-        static List<Product> AramaYap(List<Product> urunler, string kelime)
+        static List<Product> Search(List<Product> products, string word)
         {
-            return urunler
-                .Where(p => p.Name.ToLower().Contains(kelime.ToLower()))
+            return products
+                .Where(p => p.Name.ToLower().Contains(word.ToLower()))
                 .ToList();
         }
     }
