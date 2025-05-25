@@ -173,7 +173,9 @@ namespace ProductProject
                         break;
 
                     case 8:
-                        var laptops = products.Where(p => p.Name.Equals("Laptop", StringComparison.OrdinalIgnoreCase)).ToList();
+                        var laptops = products
+                            .Where(p => p.Name.ToLower().Contains("laptop"))
+                            .ToList();
                         if (laptops.Count == 0)
                             Console.WriteLine("Aradığınız ada sahip bir ürün bulunamadı!");
                         else
